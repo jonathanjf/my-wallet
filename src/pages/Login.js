@@ -70,14 +70,14 @@ class Login extends React.Component {
           </div>
           {
             disabled ? <button
-            className="waves-effect waves-light  btn-large tail"
+            className="waves-effect waves-light  btn-large teal"
             type="button"
             disabled={ disabled }
           >
             Entrar
           </button> : <Link to="/carteira"> 
             <button
-              className="waves-effect waves-light  btn-large tail"
+              className="waves-effect waves-light  btn-large teal"
               type="button"
               disabled={ disabled }
               onClick={  () => loginClick(email) }
