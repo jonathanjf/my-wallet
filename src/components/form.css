@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+}
+
+.description {
+  flex-grow: 3;
+  margin-left: 5px;
+}
+
+.options {
+  display: flex;
+  align-items: space-between;
+  
+}

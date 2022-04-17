@@ -1,13 +1,30 @@
 import React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+/* import { createTheme, ThemeProvider } from '@mui/material/styles'; */
 import "./header.css";
+
+/* const CustomizedTheme = createTheme({
+  palette: {
+    primary: {
+      main:"#008080"
+    },
+  }
+}) */
 
 const Header = () => {
   return (
-    <nav className="nav-margin">
-      <div class="nav-wrapper teal">
-        <a href="#" class="brand-logo center ">MY WALLET</a>
-      </div>
-  </nav>
+      <Box color="primary" sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+              My Wallet
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Box>
   )
 }
 

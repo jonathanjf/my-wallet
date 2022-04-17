@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { requestApiPriceThunk } from '../actions';
+import "./form.css";
 
 class Form extends Component {
   constructor() {
@@ -28,44 +29,53 @@ class Form extends Component {
     const { currencies, priceRequest } = this.props;
     return (
       <form>
-        <label htmlFor="valor">
-          Valor
-          <input type="number" id="valor" name="value" onChange={ this.handleInputs } />
-        </label>
-        <label htmlFor="desc">
-          Descrição
-          <input
-            type="text"
-            id="desc"
-            name="description"
-            onChange={ this.handleInputs }
-          />
-        </label>
-        <label htmlFor="moeda">
-          Moeda
-          <select id="moeda" name="currency" onChange={ this.handleInputs }>
-            {currencies
-              .map((currencie) => <option key={ currencie }>{currencie}</option>)}
-          </select>
-        </label>
-        <label htmlFor="payment-method">
-          Método de pagamento
-          <select id="payment-method" name="method" onChange={ this.handleInputs }>
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag-payment">
-          Tag
-          <select id="tag-payment" name="tag" onChange={ this.handleInputs }>
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-          </select>
-        </label>
+        <div className="container">
+          <div className="row">
+            <label htmlFor="valor">
+              Valor
+              <input type="number" id="valor" name="value" onChange={ this.handleInputs } />
+            </label>
+          </div>
+          <div className="row description">
+            <label htmlFor="desc">
+              Descrição
+              <input
+                type="text"
+                id="desc"
+                name="description"
+                onChange={ this.handleInputs }
+              />
+            </label>
+          </div>
+        </div>
+        <div className="options">
+              <div className="input-field col s12">
+                  <select id="moeda" name="currency" onChange={ this.handleInputs }>        
+                    {currencies
+                      .map((currencie) => <option key={ currencie }>{currencie}</option>)}
+                  </select> 
+                  <label htmlFor="moeda">Moeda</label>
+          </div>
+            <div className="input-field col s12">
+                <select id="payment-method" name="method" onChange={ this.handleInputs }>
+                  <option>Dinheiro</option>
+                  <option>Cartão de crédito</option>
+                  <option>Cartão de débito</option>
+                </select>
+                <label htmlFor="payment-method">Método de pagamento</label>
+            </div>
+            <div className="input-field col s12">
+                <select id="tag-payment" name="tag" onChange={ this.handleInputs }>
+                  <option>Alimentação</option>
+                  <option>Lazer</option>
+                  <option>Trabalho</option>
+                  <option>Transporte</option>
+                  <option>Saúde</option>
+                </select>
+                <label htmlFor="tag-payment">Tag</label>
+            </div>
+          
+        </div>  
         <button type="button" onClick={ () => priceRequest(this.state) }>
           Adicionar despesa
         </button>
