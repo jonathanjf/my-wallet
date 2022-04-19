@@ -3,7 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from '../components/form';
 import { currenciesRequestThunk } from '../actions/index';
+import { createTheme, ThemeProvider } from '@mui/material';
 import Table from '../components/table';
+import Grid from '@mui/material/Grid';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 
 class Wallet extends React.Component {
   constructor() {
@@ -30,20 +36,37 @@ class Wallet extends React.Component {
   }
 
   render() {
+
+    const CustomizedTheme = createTheme({
+      palette: {
+        primary: {
+          main:"#66b2b2"
+        },
+      }
+    });
+    
     const { email, expenses } = this.props;
     return (
-      <>
-        <header>
-          <p data-testid="email-field">{email}</p>
+      <ThemeProvider theme={CustomizedTheme} >
+        <Grid container style={{ minHeight: "100vh", minWidth: "100vw"}}>
+          <Box color="primary" sx={{ flexGrow: 1, minWidth: "100vw" }}>
+          <AppBar position="static">
+            <Toolbar>
+              <Typography variant="h5" fontWeight="bolder" color="#fff" component="div" sx={{ flexGrow: 1 }}>
+                Seja bem-vindo, {email.toUpperCase()}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          </Box>
+          <main>
+            <Form />
+            <Table />
+          </main>
           {expenses.length === 0 ? <p data-testid="total-field">0</p>
-            : <p data-testid="total-field">{this.reduceValues()}</p>}
-          <p data-testid="header-currency-field">BRL</p>
-        </header>
-        <main>
-          <Form />
-          <Table />
-        </main>
-      </>
+              : <p data-testid="total-field">{this.reduceValues()}</p>}
+            <p data-testid="header-currency-field">BRL</p>
+        </Grid>
+      </ThemeProvider>
     );
   }
 }
@@ -60,8 +83,8 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
-  requestCurrencies: PropTypes.func.isRequired,
+  email: PropTypes.string,
+  requestCurrencies: PropTypes.func,
   expenses: PropTypes.arrayOf(Object),
 };
 

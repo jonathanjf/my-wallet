@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import loginAction from '../actions/index';
+import { loginAction} from '../actions/index';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -92,7 +92,6 @@ class Login extends React.Component {
               variant="contained"
               type="button"
               size="large"
-              disabled={ disabled }
               component={ Link }
               to="/carteira"
               onClick={  () => loginClick(email) }

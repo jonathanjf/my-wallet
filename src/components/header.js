@@ -6,13 +6,6 @@ import Typography from '@mui/material/Typography';
 /* import { createTheme, ThemeProvider } from '@mui/material/styles'; */
 import "./header.css";
 
-/* const CustomizedTheme = createTheme({
-  palette: {
-    primary: {
-      main:"#008080"
-    },
-  }
-}) */
 
 const Header = () => {
   return (

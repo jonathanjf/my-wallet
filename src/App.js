@@ -14,11 +14,14 @@ function App() {
       primary: {
         main:"#008080"
       },
+      secondary: {
+        main: "#66b2b2"
+      },
     }
   })
 
   return (
-    <Grid  container style={{ minWidth: "100vh", backgroundColor: "#F5F5F5"}} flexDirection="column">
+    <Grid  container style={{ minWidth: "100vh", minHeight: "100vh", backgroundColor: "#F5F5F5"}} flexDirection="column">
       <ThemeProvider theme={CustomizedTheme}>
         <Header />
         <Route exact path="/" component={ Login } />

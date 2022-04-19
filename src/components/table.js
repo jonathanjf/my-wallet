@@ -1,70 +1,74 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {removeItem}  from '../actions/index';
 import PropTypes from 'prop-types';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 
-class Table extends Component {
+class TableComponent extends Component {
   constructor(props) {
     super(props);
-
-    this.createRate = this.createRate.bind(this);
+    this.state = {
+      rate: 0,
+    }
   }
 
-  createRate() {
-    const { expenses } = this.props;
-    expenses.map((expense) => {
-      const rateChanged = (expense.exchangeRates[expense.currency].ask)
-        .toFixed(2);
-      return <td key={ expense.id }>{rateChanged}</td>;
-    });
+  componentDidUpdate() {
+    const { rate } = this.state;
+    console.log(rate)
   }
 
   render() {
-    const { expenses } = this.props;
-    return (
-      <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-        </thead>
-        <tbody>
-          {expenses.length === 0 ? <tr><td>Sem gastos até o momento</td></tr> : expenses
-            .map((expense) => (
-              <tr key={ expense.id }>
-                <td key={ expense.description }>{expense.description}</td>
-                <td key={ expense.tag }>{expense.tag}</td>
-                <td key={ expense.method }>{expense.method}</td>
-                <td key={ expense.value }>{expense.value}</td>
-                <td key={ expense.exchangeRates[expense.currency].name }>
-                  {expense.exchangeRates[expense.currency].name
-                    .split('/')[0]}
-
-                </td>
-                {
-                  this.createRate
-                }
-                <td key={ expense.id }>
-                  {(expense.value * expense.exchangeRates[expense.currency].ask)
-                    .toFixed(2)}
-
-                </td>
-                <td key={ expense.id }>Real</td>
-                <td>
-                  <button type="button">Editar</button>
-                  <button type="button">Excluir</button>
-                </td>
-              </tr>))}
-        </tbody>
-      </table>
-    );
+    const { expenses, removeClick, ...props } = this.props;
+      return (
+        <TableContainer component={Paper} style={{ minHeight: "100vh", minWidth: "100vw"}}>
+            <Table >
+              <TableHead>
+                <TableRow>
+                  <TableCell>Descrição</TableCell>
+                  <TableCell>Tag</TableCell>
+                  <TableCell>Método de pagamento</TableCell>
+                  <TableCell>Valor</TableCell>
+                  <TableCell>Cambio utilizado</TableCell>
+                  <TableCell>Valor convertido</TableCell>
+                  <TableCell>Moeda</TableCell>
+                  <TableCell>Moeda de conversão</TableCell>
+                  <TableCell>Editar/Excluir</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {expenses.length === 0 ? <TableRow><TableCell>Sem gastos até o momento</TableCell></TableRow> : expenses
+                  .map((expense) => (
+                    <TableRow key={ expense.id }>
+                      <TableCell >{expense.description}</TableCell>
+                      <TableCell >{expense.tag}</TableCell>
+                      <TableCell >{expense.method}</TableCell>
+                      <TableCell >{expense.value}</TableCell>
+                      <TableCell>{ expense.exchangeRates[expense.currency].ask }</TableCell>
+                      <TableCell key={ expense.id }>
+                        {(expense.value * expense.exchangeRates[expense.currency].ask)
+                          .toFixed(2)}
+                      </TableCell>
+                      <TableCell >
+                        {expense.exchangeRates[expense.currency].name
+                          .split('/')[0]}
+                      </TableCell>
+                      <TableCell >Real</TableCell>
+                      <TableCell>
+                        <Button variant="outlined" size="small">Editar</Button>
+                        <Button variant="outlined" size="small" onClick={ () => removeClick(expense.id) }>Excluir</Button>
+                      </TableCell>
+                    </TableRow>))}
+              </TableBody>
+            </Table>
+            </TableContainer>
+    )
   }
 }
 
@@ -72,12 +76,17 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-Table.propTypes = {
+
+const mapDispatchToProps = (dispatch) => ({
+  removeClick: (state) => dispatch(removeItem(state)),
+});
+
+TableComponent.propTypes = {
   expenses: PropTypes.arrayOf(Object),
 };
 
-Table.defaultProps = {
+TableComponent.defaultProps = {
   expenses: [],
 };
 
-export default connect(mapStateToProps, null)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(TableComponent);

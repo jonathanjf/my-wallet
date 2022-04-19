@@ -9,10 +9,11 @@ export const CURRENCIES_REQUEST_ERROR = 'CURRENCIES_REQUEST_ERROR';
 export const PRICE_REQUEST = 'PRICE_REQUEST';
 export const PRICE_REQUEST_SUCESS = 'PRICE_REQUEST_SUCESS';
 export const PRICE_REQUEST_ERROR = 'PRICE_REQUEST_ERROR';
+export const REMOVE_ITEM = 'REMOVE_ITEM';
 
 // action creator
 
-const loginAction = (state) => ({
+export const loginAction = (state) => ({
   type: LOGIN_DATA, state });
 
 export const currenciesRequest = () => ({
@@ -45,14 +46,16 @@ export const requestPriceSucess = (state) => ({
 export const requestApiPriceThunk = (state) => (dispatch) => {
   dispatch(requestPrice());
   requestApiPrice().then((response) => {
-    const { qtd, ...spread } = state;
     const priceObj = {
-      id: qtd,
-      ...spread,
+      id: Date.now(),
+      ...state,
       exchangeRates: response,
     };
     dispatch(requestPriceSucess(priceObj));
   });
 };
 
-export default loginAction;
+export const removeItem = (state) => ({
+  type: REMOVE_ITEM, state,
+})
+

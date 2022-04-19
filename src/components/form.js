@@ -14,29 +14,22 @@ class Form extends Component {
       method: 'Dinheiro',
       currency: 'USD',
       tag: 'Alimentação',
-      qtd: 0,
     };
   }
 
   handleInputs({ target }) {
-    const { expenses } = this.props;
     const { name, value } = target;
     this.setState({ [name]: value });
-    this.setState({ qtd: expenses.length });
   }
 
   render() {
     const { currencies, priceRequest } = this.props;
     return (
       <form>
-        <div className="container">
-          <div className="row">
             <label htmlFor="valor">
               Valor
               <input type="number" id="valor" name="value" onChange={ this.handleInputs } />
             </label>
-          </div>
-          <div className="row description">
             <label htmlFor="desc">
               Descrição
               <input
@@ -46,25 +39,17 @@ class Form extends Component {
                 onChange={ this.handleInputs }
               />
             </label>
-          </div>
-        </div>
-        <div className="options">
-              <div className="input-field col s12">
                   <select id="moeda" name="currency" onChange={ this.handleInputs }>        
                     {currencies
                       .map((currencie) => <option key={ currencie }>{currencie}</option>)}
                   </select> 
                   <label htmlFor="moeda">Moeda</label>
-          </div>
-            <div className="input-field col s12">
                 <select id="payment-method" name="method" onChange={ this.handleInputs }>
                   <option>Dinheiro</option>
                   <option>Cartão de crédito</option>
                   <option>Cartão de débito</option>
                 </select>
                 <label htmlFor="payment-method">Método de pagamento</label>
-            </div>
-            <div className="input-field col s12">
                 <select id="tag-payment" name="tag" onChange={ this.handleInputs }>
                   <option>Alimentação</option>
                   <option>Lazer</option>
@@ -72,11 +57,11 @@ class Form extends Component {
                   <option>Transporte</option>
                   <option>Saúde</option>
                 </select>
-                <label htmlFor="tag-payment">Tag</label>
-            </div>
-          
-        </div>  
-        <button type="button" onClick={ () => priceRequest(this.state) }>
+                <label htmlFor="tag-payment">Tag</label> 
+        <button type="button" onClick={ () => {
+          priceRequest(this.state) 
+          }
+        }>
           Adicionar despesa
         </button>
       </form>
@@ -86,7 +71,7 @@ class Form extends Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
-  expenses: state.wallet.expenses,
+  expenses: [state.wallet.expenses],
 });
 
 const mapDispatchToProps = (dispatch) => ({

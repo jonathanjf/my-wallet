@@ -4,7 +4,9 @@ import {
   CURRENCIES_REQUEST_ERROR,
   CURRENCIES_REQUEST_SUCESS,
   PRICE_REQUEST,
-  PRICE_REQUEST_SUCESS } from '../actions/index';
+  PRICE_REQUEST_SUCESS,
+  REMOVE_ITEM,
+} from '../actions/index';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -27,6 +29,11 @@ function wallet(state = INITIAL_STATE, action) {
     return { ...state,
       isLoading: false,
       expenses: [...state.expenses, action.state] };
+  case REMOVE_ITEM: 
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.state)
+    }
 
   default: return state;
   }
